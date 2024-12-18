@@ -1,0 +1,18 @@
+# ビルドされたバイナリファイル
+*.exe
+*.out
+*.o
+
+# キャッシュディレクトリ
+/tmp
+/go/bin
+/go/pkg
+
+# IDE関連ファイル
+.vscode/
+.idea/
+.DS_Store
+
+# Docker関連（必要なら）
+docker-compose.override.yml
+.env
