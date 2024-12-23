@@ -2,33 +2,31 @@ package main
 
 import (
     "fmt"
-	"log"
+    "log"
     "net/http"
-	"os"
+    "os"
 
-	"github.com/joho/godotenv"
+	"github.com/dznbk/go-todo-backend/internal/handler"
+    "github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatalf("Error loading .env file: %v", err)
+    }
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080"
+    }
 
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Hello, Go TODO Backend!")
-    })
+    h := handler.New()
 
-	http.HandleFunc("/todos", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "TODO List Endpoint")
-	})
+    http.HandleFunc("/", h.HealthCheck)
+    http.HandleFunc("/todos", h.TodoList)
 
-	fmt.Printf("Starting server on :%s\n", port)
+    fmt.Printf("Starting server on :%s\n", port)
     if err := http.ListenAndServe(":"+port, nil); err != nil {
         log.Fatalf("Server failed: %v", err)
     }
