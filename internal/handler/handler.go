@@ -7,6 +7,8 @@ import (
 
 type Handler struct{}
 
+// コンストラクタ関数
+// Go に new キーワードは存在しないので、慣習的にNewを定義するらしい
 func New() *Handler {
     return &Handler{}
 }
